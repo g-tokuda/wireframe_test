@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wireframe</title>
+  <style>
+/* === WIREFRAME BASICS === */
+:root {
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  
+  --color-bg: #ffffff;
+  --color-text: #333333;
+  --color-border: #cccccc;
+  --color-element: #f0f0f0;
+}
+
+* { box-sizing: border-box; }
+body { 
+  font-family: Arial, sans-serif; 
+  margin: 0; 
+  padding: 0; 
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* === LAYOUT GRID === */
+.container { max-width: 1440px; margin: 0 auto; padding: 0 var(--spacing-md); }
+.grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: var(--spacing-lg); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-md); }
+.flex-row { display: flex; gap: var(--spacing-sm); align-items: center; flex-wrap: wrap; }
+.flex-col { display: flex; flex-direction: column; gap: var(--spacing-sm); }
+
+/* === PHOTO GALLERY === */
+.photo-gallery { 
+  display: grid; 
+  grid-template-columns: 2fr 1fr; 
+  grid-template-rows: repeat(2, 1fr); 
+  gap: var(--spacing-xs); 
+  min-height: 400px; 
+}
+.photo-gallery .image-placeholder:first-child { grid-row: 1 / -1; }
+
+/* === STICKY ELEMENTS === */
+.sticky-widget { position: sticky; top: 100px; align-self: start; }
+
+/* === HEADER === */
+.main-header { 
+  border-bottom: 1px solid var(--color-border); 
+  padding: var(--spacing-sm) var(--spacing-md); 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  gap: var(--spacing-md);
+  min-height: 64px;
+  background: var(--color-bg);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.header-logo { font-size: 1.5rem; font-weight: bold; cursor: pointer; }
+.header-nav { display: flex; gap: var(--spacing-sm); align-items: center; }
+
+/* === SIDEBAR LAYOUT === */
+.app-container { display: flex; min-height: 100vh; max-width: 1440px; margin: 0 auto; }
+.sidebar { width: 280px; border-right: 1px solid var(--color-border); padding: var(--spacing-md); flex-shrink: 0; }
+.main-content { flex: 1; padding: var(--spacing-md); }
+
+/* === BASIC COMPONENTS === */
+.nav-link {
+  color: var(--color-text);
+  text-decoration: none;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-element);
+  border-radius: 20px;
+  white-space: nowrap;
+  min-height: var(--spacing-xl);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.nav-link.active { background: var(--color-text); color: var(--color-bg); }
+
+button, .button {
+  background: var(--color-element);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: 20px;
+  cursor: pointer;
+  min-height: var(--spacing-xl);
+  white-space: nowrap;
+}
+button.primary, .button.primary { background: var(--color-text); color: var(--color-bg); }
+
+.card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: var(--spacing-sm);
+  cursor: pointer;
+}
+
+.search-input, .text-input {
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  min-height: 56px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.image-placeholder {
+  background: var(--color-element);
+  border: 1px dashed var(--color-border);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 0.875rem;
+  aspect-ratio: 4/3;
+  width: 100%;
+}
+
+/* === PAGE MANAGEMENT === */
+.page { display: none; }
+.page:first-of-type { display: block; }
+section { margin-bottom: var(--spacing-xl); }
+
+/* === TYPOGRAPHY === */
+h1, h2, h3, h4 { margin: 0 0 var(--spacing-sm) 0; color: var(--color-text); }
+h1 { font-size: 2rem; border-bottom: 1px solid var(--color-border); padding-bottom: var(--spacing-xs); margin-bottom: var(--spacing-md); }
+h2 { font-size: 1.5rem; border-bottom: 1px solid var(--color-border); padding-bottom: var(--spacing-xs); margin-bottom: var(--spacing-md); }
+h3 { font-size: 1.25rem; }
+p { margin-bottom: var(--spacing-sm); color: #666; }
+
+/* === LISTS === */
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  margin-bottom: var(--spacing-xs);
+  cursor: pointer;
+}
+
+/* === MESSAGING === */
+.message-thread {
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-sm);
+  border-radius: 8px;
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+}
+.message-bubble {
+  max-width: 70%;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 1rem;
+  margin-bottom: var(--spacing-xs);
+}
+.message-bubble.sent { background: var(--color-text); color: var(--color-bg); margin-left: auto; align-self: flex-end; }
+.message-bubble.received { background: var(--color-element); align-self: flex-start; }
+
+/* === FOOTER === */
+.main-footer {
+  background: var(--color-element);
+  padding: var(--spacing-lg) var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+}
+.main-footer a { color: #666; text-decoration: none; margin: 0 var(--spacing-sm); }
+
+/* === CUSTOM CLASSES === */
+.hero-section {
+    min-height: 450px;
+    background: var(--color-element);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+.hero-title { font-size: 3rem; margin-bottom: var(--spacing-md); }
+.filters-bar { padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--color-border); margin-bottom: var(--spacing-lg); }
+.map-container { background: var(--color-element); min-height: 600px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.pagination { display: flex; justify-content: center; gap: var(--spacing-xs); padding: var(--spacing-md) 0; }
+.review-card { padding: var(--spacing-sm); border: 1px solid var(--color-border); border-radius: 8px; margin-bottom: var(--spacing-sm); }
+.text-area-large { min-height: 150px; width: 100%; padding: var(--spacing-sm); border: 1px solid var(--color-border); border-radius: 4px; }
+.star-rating { color: var(--color-text); font-size: 1.5rem; letter-spacing: var(--spacing-xs); cursor: pointer; }
+.confirmation-header { text-align: center; padding: var(--spacing-xl) 0; }
+.confirmation-header h1 { font-size: 2.5rem; border: none; }
+  </style>
+</head>
+<body>
+  <script>
+    function show(id) {
+      document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+      const page = document.getElementById(id);
+      if (page) {
+        page.style.display = 'block';
+        window.scrollTo(0, 0);
+      }
+    }
+    // Simple alert for implicit navigation
+    function alertImplicit(pageName) {
+        alert(`Navigate to implicit page: ${pageName}`);
+    }
+  </script>
+
+  <!-- Page 1: Homepage -->
+  <div class="page" id="page-1">
+    <header class="main-header">
+      <div class="header-logo" onclick="show('page-1')">Logo</div>
+      <div class="flex-row" style="flex: 1; justify-content: center;">
+        <input type="text" class="search-input" placeholder="Location">
+        <input type="text" class="search-input" placeholder="Dates">
+        <input type="text" class="search-input" placeholder="Guests">
+        <button class="primary" onclick="show('page-2')">Search</button>
+      </div>
+      <nav class="header-nav">
+        <div class="nav-link" onclick="show('page-9')">Host Dashboard</div>
+        <div class="nav-link" onclick="show('page-6')">User Menu</div>
+      </nav>
+    </header>
+    <div class="container">
+      <section class="hero-section">
+        <h1 class="hero-title">Find your next stay</h1>
+        <p>Discover unique places to stay and things to do.</p>
+        <button class="primary" onclick="show('page-2')" style="padding: 16px 32px; font-size: 1.2rem;">Discover unique places</button>
+      </section>
+      <section>
+        <h2>Explore Categories</h2>
+        <div class="grid-3">
+          <div class="card" onclick="show('page-2')"><div class="image-placeholder"></div><h3>Category 1</h3></div>
+          <div class="card" onclick="show('page-2')"><div class="image-placeholder"></div><h3>Category 2</h3></div>
+          <div class="card" onclick="show('page-2')"><div class="image-placeholder"></div><h3>Category 3</h3></div>
+          <div class="card" onclick="show('page-2')"><div class="image-placeholder"></div><h3>Category 4</h3></div>
+          <div class="card" onclick="show('page-2')"><div class="image-placeholder"></div><h3>Category 5</h3></div>
+          <div class="card" onclick="show('page-2')"><div class="image-placeholder"></div><h3>Category 6</h3></div>
+        </div>
+      </section>
+      <section>
+        <h2>Featured Destinations</h2>
+        <div class="grid-auto">
+          <div class="card" onclick="show('page-2')"><div class="image-placeholder"></div><h3>Destination 1</h3></div>
+          <div class="card" onclick="show('page-2')"><div class="image-placeholder"></div><h3>Destination 2</h3></div>
+          <div class="card" onclick="show('page-2')"><div class="image-placeholder"></div><h3>Destination 3</h3></div>
+          <div class="card" onclick="show('page-2')"><div class="image-placeholder"></div><h3>Destination 4</h3></div>
+        </div>
+      </section>
+    </div>
+    <footer class="main-footer">
+      <a href="#">Help Center</a>
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+      <a href="#">Sitemap</a>
+      <a href="#">Language</a>
+      <a href="#">Currency</a>
+    </footer>
+  </div>
+
+  <!-- Page 2: Search Results Page -->
+  <div class="page" id="page-2">
+    <header class="main-header">
+        <div class="header-logo" onclick="show('page-1')">Logo</div>
+        <div class="flex-row" style="flex: 1; justify-content: center;">
+            <input type="text" class="search-input" placeholder="Location" value="New York">
+            <input type="text" class="search-input" placeholder="Dates" value="12-15 Dec">
+            <input type="text" class="search-input" placeholder="Guests" value="2 Guests">
+            <button class="primary" onclick="show('page-2')">Search</button>
+        </div>
+        <nav class="header-nav">
+          <div class="nav-link" onclick="show('page-9')">Host Dashboard</div>
+          <div class="nav-link" onclick="show('page-6')">User Menu</div>
+        </nav>
+    </header>
+    <div class="container">
+      <div class="filters-bar flex-row">
+        <button>Price</button>
+        <button>Guests</button>
+        <button>Property Type</button>
+        <button>Amenities</button>
+        <button>More Filters</button>
+      </div>
+      <section class="grid-2">
+        <div class="flex-col" style="gap: var(--spacing-md);">
+          <h2>23 properties found</h2>
+          <div class="card" onclick="show('page-3')">
+              <div class="image-placeholder"></div>
+              <h3>Modern Loft with City View</h3>
+              <p>5 Stars | Manhattan, NY</p>
+              <p><b>$250</b> / night</p>
+          </div>
+          <div class="card" onclick="show('page-3')">
+              <div class="image-placeholder"></div>
+              <h3>Cozy Studio in Brooklyn</h3>
+              <p>4.8 Stars | Brooklyn, NY</p>
+              <p><b>$150</b> / night</p>
+          </div>
+          <div class="card" onclick="show('page-3')">
+              <div class="image-placeholder"></div>
+              <h3>Spacious Apartment near Central Park</h3>
+              <p>4.9 Stars | Upper West Side, NY</p>
+              <p><b>$300</b> / night</p>
+          </div>
+          <div class="pagination">
+            <a href="#" class="nav-link">Prev</a>
+            <a href="#" class="nav-link active">1</a>
+            <a href="#" class="nav-link">2</a>
+            <a href="#" class="nav-link">3</a>
+            <a href="#" class="nav-link">Next</a>
+          </div>
+        </div>
+        <div class="sticky-widget">
+          <div class="map-container">Interactive Map Placeholder</div>
+        </div>
+      </section>
+    </div>
+    <footer class="main-footer">
+      <a href="#">Help Center</a> <a href="#">Terms</a> <a href="#">Privacy</a> <a href="#">Sitemap</a> <a href="#">Language</a> <a href="#">Currency</a>
+    </footer>
+  </div>
+
+  <!-- Page 3: Property Details Page -->
+  <div class="page" id="page-3">
+    <header class="main-header">
+      <div class="header-logo" onclick="show('page-1')">Logo</div>
+      <div class="flex-row" style="flex: 1; justify-content: center;">
+        <input type="text" class="search-input" placeholder="Location">
+        <input type="text" class="search-input" placeholder="Dates">
+        <input type="text" class="search-input" placeholder="Guests">
+        <button class="primary" onclick="show('page-2')">Search</button>
+      </div>
+      <nav class="header-nav">
+        <div class="nav-link" onclick="show('page-9')">Host Dashboard</div>
+        <div class="nav-link" onclick="show('page-6')">User Menu</div>
+      </nav>
+    </header>
+    <div class="container">
+      <section>
+        <div class="photo-gallery">
+          <div class="image-placeholder">Image 1</div>
+          <div class="image-placeholder">Image 2</div>
+          <div class="image-placeholder">Image 3</div>
+        </div>
+      </section>
+      <section class="grid-2">
+        <div class="flex-col" style="gap: var(--spacing-lg);">
+          <div>
+            <h1>Modern Loft with City View</h1>
+            <p>5 Stars | Manhattan, NY | Hosted by Jane Doe</p>
+          </div>
+          <div>
+            <h3>About this place</h3>
+            <p>A beautiful and modern loft in the heart of the city. Enjoy stunning views and all the amenities you need for a comfortable stay. Perfect for couples or solo travelers looking to explore the best of what the city has to offer.</p>
+            <a href="#">Read More</a>
+          </div>
+          <div>
+            <h3>Amenities</h3>
+            <p>Wifi, Kitchen, TV, Air Conditioning, Washer, Dryer</p>
+          </div>
+          <div class="card">
+            <div class="flex-row">
+              <div class="image-placeholder" style="width: 64px; height: 64px; border-radius: 50%;">Avatar</div>
+              <div class="flex-col" style="gap: var(--spacing-xs);">
+                <h3>Hosted by Jane Doe</h3>
+                <p>Superhost since 2018</p>
+                <button onclick="alertImplicit('Host Profile')">View Host Profile</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sticky-widget">
+          <div class="card" style="padding: var(--spacing-md);">
+            <div class="flex-col" style="gap: var(--spacing-sm);">
+              <h3>$250 / night</h3>
+              <input type="text" class="text-input" placeholder="Check-in Date">
+              <input type="text" class="text-input" placeholder="Check-out Date">
+              <input type="text" class="text-input" placeholder="2 Guests">
+              <div class="flex-row" style="justify-content: space-between;">
+                  <p>$250 x 3 nights</p><p>$750</p>
+              </div>
+              <div class="flex-row" style="justify-content: space-between;">
+                  <p>Service Fee</p><p>$105</p>
+              </div>
+               <div class="flex-row" style="justify-content: space-between; font-weight: bold; border-top: 1px solid var(--color-border); padding-top: var(--spacing-sm);">
+                  <p>Total</p><p>$855</p>
+              </div>
+              <button class="primary" style="width: 100%;" onclick="show('page-4')">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2>Reviews (124 reviews, 5 Stars)</h2>
+        <div class="grid-2" style="gap: var(--spacing-md)">
+          <div class="review-card">
+            <h4>John S. - May 2024</h4>
+            <p>Amazing place! The view is incredible and the apartment was spotless. Jane was a fantastic host. Highly recommend!</p>
+          </div>
+          <div class="review-card">
+            <h4>Maria G. - April 2024</h4>
+            <p>We had a wonderful stay. The location is perfect for exploring the city. The apartment is stylish and comfortable.</p>
+          </div>
+        </div>
+        <button style="margin-top: var(--spacing-sm);" onclick="alert('Show all reviews')">Show all 124 reviews</button>
+      </section>
+      <section>
+          <h2>Location on Map</h2>
+          <div class="map-container" style="min-height: 400px;">Map Preview</div>
+      </section>
+    </div>
+    <footer class="main-footer">
+      <a href="#">Help Center</a> <a href="#">Terms</a> <a href="#">Privacy</a> <a href="#">Sitemap</a> <a href="#">Language</a> <a href="#">Currency</a>
+    </footer>
+  </div>
+
+  <!-- Page 4: Booking Review Page -->
+  <div class="page" id="page-4">
+    <header class="main-header">
+      <div class="header-logo" onclick="show('page-1')">Logo</div>
+      <div class="flex-row" style="flex: 1; justify-content: center;">
+      </div>
+      <nav class="header-nav">
+        <div class="nav-link" onclick="show('page-9')">Host Dashboard</div>
+        <div class="nav-link" onclick="show('page-6')">User Menu</div>
+      </nav>
+    </header>
+    <div class="container">
+      <h1>Review and Pay</h1>
+      <a href="#" onclick="show('page-3')">&larr; Back to Property Details</a>
+      <section class="grid-2" style="margin-top: var(--spacing-md);">
+        <div class="flex-col" style="gap: var(--spacing-lg);">
+          <div class="card" style="padding: var(--spacing-md);">
+              <h3>Your Trip Details</h3>
+              <p><strong>Check-in:</strong> Dec 12, 2024</p>
+              <p><strong>Check-out:</strong> Dec 15, 2024</p>
+              <p><strong>Guests:</strong> 2</p>
+          </div>
+          <div class="card" style="padding: var(--spacing-md);">
+              <h3>Price Breakdown</h3>
+              <div class="flex-row" style="justify-content: space-between;"><p>$250 x 3 nights</p><p>$750</p></div>
+              <div class="flex-row" style="justify-content: space-between;"><p>Cleaning fee</p><p>$50</p></div>
+              <div class="flex-row" style="justify-content: space-between;"><p>Service fee</p><p>$105</p></div>
+              <div class="flex-row" style="justify-content: space-between;"><p>Occupancy taxes and fees</p><p>$55</p></div>
+              <div class="flex-row" style="justify-content: space-between; font-weight: bold; border-top: 1px solid var(--color-border); padding-top: var(--spacing-sm);"><p>Total (USD)</p><p>$960</p></div>
+          </div>
+          <div class="card" style="padding: var(--spacing-md);">
+            <h3>Payment Information</h3>
+            <div class="flex-col" style="gap: var(--spacing-sm);">
+                <p>Select Payment Method: [Visa] [Mastercard] [PayPal]</p>
+                <input type="text" class="text-input" placeholder="Credit Card Number">
+                <div class="flex-row" style="gap: var(--spacing-sm);">
+                    <input type="text" class="text-input" placeholder="Expiration Date">
+                    <input type="text" class="text-input" placeholder="CVV">
+                </div>
+                <input type="text" class="text-input" placeholder="Name on Card">
+            </div>
+          </div>
+        </div>
+        <div class="sticky-widget">
+          <div class="card" style="padding: var(--spacing-md);">
+            <div class="image-placeholder"></div>
+            <h3>Modern Loft with City View</h3>
+            <p>Hosted by Jane Doe</p>
+            <p>123 Main St, Manhattan, NY</p>
+            <hr>
+            <p><strong>Cancellation Policy:</strong> Free cancellation before Dec 5. <a href="#">Read more</a></p>
+          </div>
+        </div>
+      </section>
+      <section>
+          <button class="primary" style="font-size: 1.2rem; padding: 16px 32px;" onclick="show('page-5')">Confirm and Pay</button>
+          <p>By clicking, you agree to the <a href="#">Terms and Conditions</a>.</p>
+      </section>
+    </div>
+    <footer class="main-footer">
+      <a href="#">Help Center</a> <a href="#">Terms</a> <a href="#">Privacy</a> <a href="#">Sitemap</a> <a href="#">Language</a> <a href="#">Currency</a>
+    </footer>
+  </div>
+
+  <!-- Page 5: Booking Confirmation Page -->
+  <div class="page" id="page-5">
+     <header class="main-header">
+      <div class="header-logo" onclick="show('page-1')">Logo</div>
+      <nav class="header-nav">
+        <div class="nav-link" onclick="show('page-9')">Host Dashboard</div>
+        <div class="nav-link" onclick="show('page-6')">User Menu</div>
+      </nav>
+    </header>
+    <div class="container">
+        <section class="confirmation-header">
+            <h1>Booking Confirmed!</h1>
+            <p>Confirmation Code: ABCDE1234</p>
+        </section>
+        <section class="card" style="padding: var(--spacing-lg); max-width: 800px; margin: 0 auto;">
+            <h2>Your Trip Details</h2>
+            <p><strong>Property:</strong> <a href="#" onclick="show('page-3')">Modern Loft with City View</a></p>
+            <p><strong>Host:</strong> <a href="#" onclick="alertImplicit('Host Profile')">Jane Doe</a></p>
+            <p><strong>Check-in:</strong> Dec 12, 2024 | <strong>Check-out:</strong> Dec 15, 2024</p>
+            <p><strong>Address:</strong> 123 Main St, Manhattan, NY, 10001</p>
+            <p><strong>Total Price Paid:</strong> $960</p>
+        </section>
+        <section style="text-align: center;">
+            <h2>Next Steps</h2>
+            <div class="flex-row" style="justify-content: center; gap: var(--spacing-md);">
+                <button class="primary" onclick="show('page-8')">Message Host</button>
+                <button onclick="show('page-6')">View My Bookings</button>
+                <button>Add to Calendar</button>
+                <button>Get Directions</button>
+            </div>
+        </section>
+    </div>
+    <footer class="main-footer">
+      <a href="#">Help Center</a> <a href="#">Terms</a> <a href="#">Privacy</a> <a href="#">Sitemap</a> <a href="#">Language</a> <a href="#">Currency</a>
+    </footer>
+  </div>
+  
+  <!-- Page 6: User Dashboard Page -->
+  <div class="page" id="page-6">
+    <header class="main-header">
+      <div class="header-logo" onclick="show('page-1')">Logo</div>
+      <nav class="header-nav">
+        <div class="nav-link" onclick="show('page-9')">Host Dashboard</div>
+        <div class="nav-link active" onclick="show('page-6')">User Menu</div>
+      </nav>
+    </header>
+    <div class="container">
+        <h1>Welcome, User!</h1>
+        <section>
+            <h2>Upcoming Trips</h2>
+            <div class="grid-auto">
+                <div class="card flex-col" style="gap: var(--spacing-sm); cursor: default;">
+                    <h3>Modern Loft with City View</h3>
+                    <p>Dec 12, 2024 - Dec 15, 2024</p>
+                    <button onclick="show('page-3')">View Details</button>
+                </div>
+                <div class="card flex-col" style="gap: var(--spacing-sm); cursor: default;">
+                    <h3>Beach House in Malibu</h3>
+                    <p>Jan 20, 2025 - Jan 25, 2025</p>
+                    <button onclick="show('page-3')">View Details</button>
+                </div>
+            </div>
+            <a href="#" style="display: block; margin-top: var(--spacing-sm);">See All Upcoming Trips</a>
+        </section>
+        <section>
+            <h2>Past Trips</h2>
+            <div class="grid-auto">
+                <div class="card flex-col" style="gap: var(--spacing-sm); cursor: default;">
+                    <h3>Mountain Cabin in Aspen</h3>
+                    <p>Feb 10, 2024 - Feb 15, 2024</p>
+                    <button onclick="show('page-7')">Leave a Review</button>
+                </div>
+            </div>
+            <a href="#" style="display: block; margin-top: var(--spacing-sm);">See All Past Trips</a>
+        </section>
+        <section>
+            <h2>Inbox</h2>
+            <div class="flex-col" style="gap: var(--spacing-xs);">
+                <div class="list-item" onclick="show('page-8')">
+                    <p><strong>Jane Doe:</strong> Re: Your upcoming trip</p>
+                    <p>2 days ago</p>
+                </div>
+                <div class="list-item" onclick="show('page-8')">
+                    <p><strong>Robert Smith:</strong> Re: Question about your stay</p>
+                    <p>1 week ago</p>
+                </div>
+            </div>
+            <button style="margin-top: var(--spacing-sm);" onclick="show('page-8')">View All Messages</button>
+        </section>
+    </div>
+    <footer class="main-footer">
+      <a href="#">Help Center</a> <a href="#">Terms</a> <a href="#">Privacy</a> <a href="#">Sitemap</a> <a href="#">Language</a> <a href="#">Currency</a>
+    </footer>
+  </div>
+
+  <!-- Page 7: Review Submission Page -->
+  <div class="page" id="page-7">
+    <header class="main-header">
+        <div class="header-logo" onclick="show('page-1')">Logo</div>
+        <nav class="header-nav">
+          <div class="nav-link" onclick="show('page-9')">Host Dashboard</div>
+          <div class="nav-link" onclick="show('page-6')">User Menu</div>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Share Your Experience!</h1>
+        <section class="card" style="padding: var(--spacing-md);">
+            <div class="flex-row" style="gap: var(--spacing-md); align-items: center;">
+                <div class="image-placeholder" style="width: 120px; height: 90px; flex-shrink: 0;"></div>
+                <div>
+                    <h3>Review for: Mountain Cabin in Aspen</h3>
+                    <p>Hosted by Robert Smith</p>
+                    <p>Stay Dates: Feb 10, 2024 - Feb 15, 2024</p>
+                </div>
+            </div>
+        </section>
+        <section class="card" style="padding: var(--spacing-md);">
+            <h3>Your Rating</h3>
+            <div class="flex-col" style="gap: var(--spacing-sm);">
+                <div class="flex-row" style="justify-content: space-between;"><p>Overall Rating:</p><p class="star-rating">☆☆☆☆☆</p></div>
+                <div class="flex-row" style="justify-content: space-between;"><p>Cleanliness:</p><p class="star-rating">☆☆☆☆☆</p></div>
+                <div class="flex-row" style="justify-content: space-between;"><p>Communication:</p><p class="star-rating">☆☆☆☆☆</p></div>
+                <div class="flex-row" style="justify-content: space-between;"><p>Location:</p><p class="star-rating">☆☆☆☆☆</p></div>
+                <div class="flex-row" style="justify-content: space-between;"><p>Value:</p><p class="star-rating">☆☆☆☆☆</p></div>
+            </div>
+            <h3 style="margin-top: var(--spacing-lg);">Write your review</h3>
+            <textarea class="text-area-large" placeholder="Share details of your own experience at this place (Min 50 chars)"></textarea>
+            <p>Character count: 0/500</p>
+            <div class="flex-row" style="margin-top: var(--spacing-md); gap: var(--spacing-sm);">
+                <button class="primary" onclick="show('page-6')">Submit Review</button>
+                <button onclick="show('page-6')">Cancel</button>
+            </div>
+        </section>
+    </div>
+    <footer class="main-footer">
+      <a href="#">Help Center</a> <a href="#">Terms</a> <a href="#">Privacy</a> <a href="#">Sitemap</a> <a href="#">Language</a> <a href="#">Currency</a>
+    </footer>
+  </div>
+  
+  <!-- Page 8: Messaging Page -->
+  <div class="page" id="page-8">
+    <header class="main-header">
+      <div class="header-logo" onclick="show('page-1')">Logo</div>
+      <nav class="header-nav">
+        <div class="nav-link" onclick="show('page-9')">Host Dashboard</div>
+        <div class="nav-link" onclick="show('page-6')">User Menu</div>
+      </nav>
+    </header>
+    <div class="container">
+      <h1>Your Messages</h1>
+    </div>
+    <div class="app-container" style="min-height: auto;">
+        <div class="sidebar">
+            <h3>Conversations</h3>
+            <div class="list-item active">
+                <p><strong>Jane Doe</strong><br>Modern Loft...</p>
+            </div>
+            <div class="list-item">
+                <p><strong>Robert Smith</strong><br>Mountain Cabin...</p>
+            </div>
+            <div class="list-item">
+                 <p><strong>Emily White</strong><br>Seaside Cottage...</p>
+            </div>
+        </div>
+        <div class="main-content">
+            <h3>Conversation with Jane Doe</h3>
+            <div class="message-thread">
+                <div class="message-bubble received"><p>Hi! Great to have you. Just let me know if you need anything for your stay.</p></div>
+                <div class="message-bubble sent"><p>Hi Jane, looking forward to it! Could you let me know the WiFi password?</p></div>
+                <div class="message-bubble received"><p>Of course! It's 'CityView2024'.</p></div>
+                <div class="message-bubble sent"><p>Thank you!</p></div>
+            </div>
+            <div class="flex-row">
+                <input type="text" class="text-input" placeholder="Type your message...">
+                <button class="primary">Send</button>
+            </div>
+        </div>
+    </div>
+    <footer class="main-footer">
+      <a href="#">Help Center</a> <a href="#">Terms</a> <a href="#">Privacy</a> <a href="#">Sitemap</a> <a href="#">Language</a> <a href="#">Currency</a>
+    </footer>
+  </div>
+
+  <!-- Page 9: Host Dashboard Page -->
+  <div class="page" id="page-9">
+    <header class="main-header">
+      <div class="header-logo" onclick="show('page-1')">Logo</div>
+      <nav class="header-nav">
+        <div class="nav-link active" onclick="show('page-9')">Host Dashboard</div>
+        <div class="nav-link" onclick="show('page-6')">User Menu</div>
+      </nav>
+    </header>
+    <div class="container">
+        <h1>Welcome, Host Jane Doe!</h1>
+        <section class="card" style="padding: var(--spacing-md);">
+            <h2>Overview</h2>
+            <div class="flex-row" style="gap: var(--spacing-lg);">
+                <p><strong>Total Listings:</strong> 3</p>
+                <p><strong>Upcoming Reservations:</strong> 5</p>
+                <p><strong>Earnings This Month:</strong> $4,520</p>
+            </div>
+            <h3 style="margin-top: var(--spacing-md);">Quick Actions</h3>
+            <div class="flex-row" style="gap: var(--spacing-sm);">
+                <button class="primary" onclick="alertImplicit('Host Listing Creation')">Add New Listing</button>
+                <button onclick="alertImplicit('Host Listing Management')">Manage Listings</button>
+                <button onclick="alertImplicit('Host Calendar')">View Calendar</button>
+            </div>
+        </section>
+        <section>
+            <h2>Your Listings</h2>
+            <div class="grid-auto">
+                <div class="card flex-col" style="gap: var(--spacing-sm); cursor: default;">
+                    <h3>Modern Loft with City View</h3>
+                    <p>Status: Listed</p>
+                    <div class="flex-row"><a href="#" onclick="alertImplicit('Host Listing Editing')">Edit</a> | <a href="#" onclick="show('page-3')">View</a></div>
+                </div>
+                <div class="card flex-col" style="gap: var(--spacing-sm); cursor: default;">
+                    <h3>Quiet Garden Apartment</h3>
+                    <p>Status: Listed</p>
+                    <div class="flex-row"><a href="#" onclick="alertImplicit('Host Listing Editing')">Edit</a> | <a href="#" onclick="show('page-3')">View</a></div>
+                </div>
+            </div>
+            <a href="#" style="display: block; margin-top: var(--spacing-sm);" onclick="alertImplicit('Host Listing Management')">View All Listings</a>
+        </section>
+    </div>
+    <footer class="main-footer">
+      <a href="#">Help Center</a> <a href="#">Terms</a> <a href="#">Privacy</a> <a href="#">Sitemap</a> <a href="#">Language</a> <a href="#">Currency</a>
+    </footer>
+  </div>
+
+</body>
+</html>
